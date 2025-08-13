@@ -1,0 +1,116 @@
+<div class="summary-container">
+  <div class="header">
+    <h1>Riepilogo Annuale {{year}}</h1>
+    <div class="header-buttons">
+      <button class="back-button" (click)="navigateToHome()">
+        <span class="material-icons">arrow_back</span> Torna alla Home
+      </button>
+      <button class="export-button excel" (click)="exportToExcel()">
+        <span class="material-icons">table_view</span> Esporta Excel
+      </button>
+      <button class="export-button pdf" (click)="exportToPDF()">
+        <span class="material-icons">picture_as_pdf</span> Esporta PDF
+      </button>
+    </div>
+  </div>
+
+  <div class="annual-stats">
+    <div class="stat-card">
+      <h3>Giorni Lavorativi Totali</h3>
+      <div class="stat-value">{{summary?.workingDays || 0}}</div>
+    </div>
+
+    <div class="stat-card">
+      <h3>Smart Working</h3>
+      <div class="stat-value">{{summary?.casaDays || 0}}</div>
+      <div class="stat-circle" [style.background-color]="dayTypeColors['CASA']"></div>
+    </div>
+
+    <div class="stat-card">
+      <h3>Ufficio</h3>
+      <div class="stat-value">{{summary?.aziendaDays || 0}}</div>
+      <div class="stat-circle" [style.background-color]="dayTypeColors['AZIENDA']"></div>
+    </div>
+
+    <div class="stat-card">
+      <h3>PAR (ore)</h3>
+      <div class="stat-value">{{summary?.parHours || 0}}</div>
+      <div class="stat-circle" [style.background-color]="dayTypeColors['PAR']"></div>
+    </div>
+
+    <div class="stat-card">
+      <h3>FERIE (ore)</h3>
+      <div class="stat-value">{{summary?.ferieHours || 0}}</div>
+      <div class="stat-circle" [style.background-color]="dayTypeColors['FERIE']"></div>
+    </div>
+
+    <div class="stat-card">
+      <h3>MALATTIA (giorni)</h3>
+      <div class="stat-value">{{summary?.malattiaDays || 0}}</div>
+      <div class="stat-circle" [style.background-color]="dayTypeColors['MALATTIA']"></div>
+    </div>
+  </div>
+
+  <div class="monthly-stats">
+    <h2>Dettaglio Mensile</h2>
+    <table class="month-table">
+      <thead>
+        <tr>
+          <th>Mese</th>
+          <th>Giorni Lavorativi</th>
+          <th>Smart Working</th>
+          <th>Ufficio</th>
+          <th>PAR (ore)</th>
+          <th>FERIE (ore)</th>
+          <th>MALATTIA (giorni)</th>
+          <th>Utilizzo %</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let month of chartData">
+          <td>{{month.month}}</td>
+          <td>{{month.workingDays}}</td>
+          <td>{{month.casaDays}}</td>
+          <td>{{month.aziendaDays}}</td>
+          <td>{{month.parHours}}</td>
+          <td>{{month.ferieHours}}</td>
+          <td>{{month.malattiaDays}}</td>
+          <td>
+            <div class="utilization-bar-container">
+              <div class="utilization-bar" [style.width.%]="month.utilizationPercent"
+                   [ngClass]="{'warning': month.utilizationPercent > 90, 'danger': month.utilizationPercent > 100}">
+                {{month.utilizationPercent}}%
+              </div>
+            </div>
+          </td>
+          <td>
+            <button class="view-month-btn" (click)="navigateToMonth(chartData.indexOf(month))">
+              <i class="material-icons">calendar_month</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="legend">
+    <h3>Legenda</h3>
+    <div class="legend-item">
+      <div class="legend-color" [style.background-color]="dayTypeColors['CASA']"></div>
+      <span>Smart Working (CASA)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" [style.background-color]="dayTypeColors['AZIENDA']"></div>
+      <span>Ufficio (AZIENDA)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" [style.background-color]="dayTypeColors['PAR']"></div>
+      <span>Permesso (PAR)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" [style.background-color]="dayTypeColors['FERIE']"></div>
+      <span>Ferie</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,177 @@
+<div class="container">
+  <header>
+    <h1>Calendario Smart Working 2025</h1>
+    <p>Seleziona un mese per gestire i tuoi giorni di smart working, oppure consulta il riepilogo annuale.</p>
+  </header>
+
+  <div class="months-grid">
+    <div class="month-card" *ngFor="let month of months" (click)="navigateToMonth(month.id)">
+      <h2>{{ month.name }}</h2>
+      <div class="month-icon">
+        <span class="material-icons">calendar_month</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button (click)="navigateToSummary()" class="btn-summary">
+      <span class="material-icons">summarize</span>
+      Visualizza Riepilogo Annuale
+    </button>
+    <button (click)="openAddDateModal()" class="btn-add">
+      <span class="material-icons">add</span>
+      Aggiungi Date
+    </button>
+  </div>
+
+  <div class="legend">
+    <h3>Legenda:</h3>
+    <div class="legend-item">
+      <div class="color-box casa"></div>
+      <span>CASA</span>
+    </div>
+    <div class="legend-item">
+      <div class="color-box azienda"></div>
+      <span>AZIENDA</span>
+    </div>
+    <div class="legend-item">
+      <div class="color-box par"></div>
+      <span>PAR (ore)</span>
+    </div>
+    <div class="legend-item">
+      <div class="color-box ferie"></div>
+      <span>FERIE (ore)</span>
+    </div>
+    <div class="legend-item">
+      <div class="color-box malattia"></div>
+      <span>MALATTIA</span>
+    </div>
+    <div class="legend-item">
+      <div class="color-box holiday"></div>
+      <span>Festività / Weekend</span>
+    </div>
+  </div>
+
+  <footer>
+    <p>Il limite massimo annuale per i giorni di lavoro da CASA è 150 giorni.</p>
+  </footer>
+
+  <!-- Modal per aggiungere date -->
+  <div class="date-modal" *ngIf="showDateModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Aggiungi giorni al calendario</h3>
+        <button class="close-button" (click)="closeDateModal()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Modalità di selezione:</label>
+          <div class="selection-mode">
+            <div class="mode-option" [class.selected]="selectionMode === 'single'" (click)="selectionMode = 'single'">
+              <span class="material-icons">event</span>
+              <span>Data singola</span>
+            </div>
+            <div class="mode-option" [class.selected]="selectionMode === 'range'" (click)="selectionMode = 'range'">
+              <span class="material-icons">date_range</span>
+              <span>Intervallo di date</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="selectionMode === 'single'">
+          <label>Seleziona data:</label>
+          <input type="date" [(ngModel)]="selectedDate" min="2025-01-01" max="2025-12-31">
+        </div>
+
+        <div class="form-group" *ngIf="selectionMode === 'range'">
+          <label>Data iniziale:</label>
+          <input type="date" [(ngModel)]="startDate" min="2025-01-01" max="2025-12-31">
+          <label>Data finale:</label>
+          <input type="date" [(ngModel)]="endDate" min="2025-01-01" max="2025-12-31">
+        </div>
+
+        <div class="form-group">
+          <label>Seleziona tipo:</label>
+          <div class="type-options">
+            <div class="type-option" [class.selected]="selectedType === dayTypes.CASA" (click)="updateSelectedType(dayTypes.CASA)">
+              <div class="color-box casa"></div>
+              <span>CASA</span>
+            </div>
+            <div class="type-option" [class.selected]="selectedType === dayTypes.AZIENDA" (click)="updateSelectedType(dayTypes.AZIENDA)">
+              <div class="color-box azienda"></div>
+              <span>AZIENDA</span>
+            </div>
+            <div class="type-option" [class.selected]="selectedType === dayTypes.PAR" (click)="updateSelectedType(dayTypes.PAR)">
+              <div class="color-box par"></div>
+              <span>PAR</span>
+            </div>
+            <div class="type-option" [class.selected]="selectedType === dayTypes.FERIE" (click)="updateSelectedType(dayTypes.FERIE)">
+              <div class="color-box ferie"></div>
+              <span>FERIE</span>
+            </div>
+            <div class="type-option" [class.selected]="selectedType === dayTypes.MALATTIA" (click)="updateSelectedType(dayTypes.MALATTIA)">
+              <div class="color-box malattia"></div>
+              <span>MALATTIA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="selectedType === dayTypes.PAR || selectedType === dayTypes.FERIE">
+          <label>Ore: <span class="required">*</span></label>
+          <select [(ngModel)]="selectedHours" (ngModelChange)="updateSelectedHours($event)" required>
+            <option [ngValue]="0" disabled>Seleziona ore</option>
+            <option [ngValue]="2" *ngIf="selectedType === dayTypes.PAR">2 ore</option>
+            <option [ngValue]="4">4 ore</option>
+            <option [ngValue]="6" *ngIf="selectedType === dayTypes.PAR">6 ore</option>
+            <option [ngValue]="8">8 ore</option>
+          </select>
+          <div class="info-message">
+            Per i tipi PAR e FERIE è obbligatorio inserire le ore.
+          </div>
+        </div>
+
+        <!-- Opzione tipo secondario -->
+        <div class="form-group" *ngIf="showSecondaryType">
+          <label>Tipo secondario per le ore restanti:</label>
+          <div class="info-message" *ngIf="selectedType === dayTypes.PAR || selectedType === dayTypes.FERIE">
+            Seleziona un tipo per le rimanenti {{ 8 - selectedHours }} ore.
+          </div>
+          <div class="type-options">
+            <div class="type-option" [class.selected]="secondaryType === dayTypes.CASA" (click)="secondaryType = dayTypes.CASA">
+              <div class="color-box casa"></div>
+              <span>CASA</span>
+            </div>
+            <div class="type-option" [class.selected]="secondaryType === dayTypes.AZIENDA" (click)="secondaryType = dayTypes.AZIENDA">
+              <div class="color-box azienda"></div>
+              <span>AZIENDA</span>
+            </div>
+            <div class="type-option" [class.selected]="secondaryType === dayTypes.PAR" 
+                 [class.disabled]="isSelectedType(dayTypes.PAR)"
+                 (click)="updateSecondaryType(dayTypes.PAR)" 
+                 *ngIf="!isSelectedType(dayTypes.PAR)">
+              <div class="color-box par"></div>
+              <span>PAR ({{8 - selectedHours}} ore)</span>
+            </div>
+            <div class="type-option" [class.selected]="secondaryType === dayTypes.FERIE" 
+                 [class.disabled]="isSelectedType(dayTypes.FERIE)"
+                 (click)="updateSecondaryType(dayTypes.FERIE)" 
+                 *ngIf="!isSelectedType(dayTypes.FERIE) && (!isSelectedType(dayTypes.PAR) || (isSelectedType(dayTypes.PAR) && selectedHours === 4))">
+              <div class="color-box ferie"></div>
+              <span>FERIE ({{8 - selectedHours}} ore)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="warning" *ngIf="warningMessage">
+          {{ warningMessage }}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="cancel-button" (click)="closeDateModal()">Annulla</button>
+        <button class="save-button" (click)="applyToSelectedDates()" [disabled]="!isFormValid()">Applica</button>
+      </div>
+    </div>
+  </div>
+</div>

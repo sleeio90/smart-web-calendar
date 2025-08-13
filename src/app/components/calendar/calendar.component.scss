@@ -1,0 +1,430 @@
+.calendar-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+  }
+
+  .month-navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .nav-button {
+    background: none;
+    border: none;
+    color: #4285f4;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgba(66, 133, 244, 0.1);
+    }
+  }
+}
+
+.calendar {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 30px;
+
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+
+    .weekday {
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+      color: #495057;
+    }
+  }
+
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 1px;
+    background-color: #e9ecef;
+
+    .day {
+      min-height: 100px;
+      padding: 10px;
+      background-color: #fff;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      position: relative;
+
+      &:hover:not(.spacer) {
+        background-color: #f8f9fa;
+      }
+
+      &.weekend {
+        background-color: #ffeded;
+        cursor: default;
+      }
+
+      &.holiday {
+        background-color: #ffeded;
+        cursor: default;
+      }
+
+      &.casa {
+        background-color: #ffecd1;
+      }
+
+      &.azienda {
+        background-color: #e8f5e9;
+      }
+
+      &.par {
+        background-color: #e3f2fd;
+      }
+
+      &.ferie {
+        background-color: #f3e5f5;
+      }
+
+      &.malattia {
+        background-color: #ffeaea;
+        border: 1px solid #d32f2f;
+      }
+
+      &.spacer {
+        background-color: #f8f9fa;
+        cursor: default;
+      }
+
+      &.casa-mixed {
+        background: linear-gradient(135deg, #ffecd1 50%, #e3f2fd 50%);
+      }
+      
+      &.azienda-mixed {
+        background: linear-gradient(135deg, #e8f5e9 50%, #e3f2fd 50%);
+      }
+
+      &.casa-ferie-mixed {
+        background: linear-gradient(135deg, #ffecd1 50%, #f3e5f5 50%);
+      }
+      
+      &.azienda-ferie-mixed {
+        background: linear-gradient(135deg, #e8f5e9 50%, #f3e5f5 50%);
+      }
+
+      &.par-ferie-mixed {
+        background: linear-gradient(135deg, #e3f2fd 50%, #f3e5f5 50%);
+      }
+      
+      &.ferie-par-mixed {
+        background: linear-gradient(135deg, #f3e5f5 50%, #e3f2fd 50%);
+      }
+
+      .day-number {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .day-content {
+        margin-top: 5px;
+        
+        .day-type {
+          font-size: 0.9rem;
+          font-weight: bold;
+        }
+
+        .day-mixed-type {
+          font-size: 0.85rem;
+
+          .day-type {
+            font-weight: bold;
+            margin-bottom: 2px;
+          }
+          
+          .day-secondary-type {
+            font-size: 0.8rem;
+            color: #555;
+            line-height: 1.2;
+          }
+          
+          .day-secondary-plus {
+            display: inline-block;
+            font-size: 0.8rem;
+            margin: 0 2px;
+            color: #777;
+          }
+        }
+
+        .day-hours {
+          font-size: 0.8rem;
+          color: #666;
+          margin-top: 2px;
+        }
+      }
+    }
+  }
+}
+
+.monthly-summary {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.3rem;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+      .summary-label {
+        font-weight: bold;
+        color: #555;
+      }
+
+      .summary-value {
+        font-weight: bold;
+        color: #333;
+      }
+    }
+  }
+}
+
+// Modal styles
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow: auto;
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-bottom: 1px solid #e9ecef;
+
+      h3 {
+        margin: 0;
+        color: #333;
+      }
+
+      .close-button {
+        background: none;
+        border: none;
+        color: #aaa;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          color: #333;
+        }
+      }
+    }
+
+    .modal-body {
+      padding: 20px;
+
+      .form-group {
+        margin-bottom: 20px;
+
+        label {
+          display: block;
+          margin-bottom: 10px;
+          font-weight: bold;
+          color: #555;
+          
+          .required {
+            color: #e53935;
+            margin-left: 3px;
+          }
+        }
+
+        .info-message {
+          margin-top: 5px;
+          font-size: 0.85rem;
+          color: #666;
+        }
+
+        select {
+          width: 100%;
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid #ddd;
+          font-size: 1rem;
+          background-color: #fff;
+        }
+
+        .type-options {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+
+          .type-option {
+            border: 2px solid #eee;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: calc(50% - 5px);
+
+            &.selected {
+              border-color: #4285f4;
+              background-color: rgba(66, 133, 244, 0.05);
+            }
+
+            &.disabled {
+              opacity: 0.5;
+              cursor: not-allowed;
+              position: relative;
+              
+              &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(255, 255, 255, 0.4);
+                border-radius: 8px;
+              }
+            }
+
+            .color-box {
+              width: 16px;
+              height: 16px;
+              border-radius: 3px;
+
+              &.none {
+                background-color: #eee;
+              }
+
+              &.casa {
+                background-color: #ffc000; // Arancione
+              }
+
+              &.azienda {
+                background-color: #92d050; // Verde
+              }
+
+              &.par {
+                background-color: #00b0f0; // Blu chiaro
+              }
+
+              &.ferie {
+                background-color: #7030a0; // Viola
+              }
+              
+              &.malattia {
+                background-color: #ff6666; // Rosso chiaro
+                border: 1px solid #d32f2f;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      padding: 15px 20px;
+      border-top: 1px solid #e9ecef;
+
+      button {
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.2s;
+
+        &.cancel-button {
+          background: none;
+          border: 1px solid #ddd;
+          color: #666;
+
+          &:hover {
+            background-color: #f8f9fa;
+          }
+        }
+
+        &.save-button {
+          background-color: #4285f4;
+          border: none;
+          color: white;
+
+          &:hover {
+            background-color: #3367d6;
+          }
+        }
+      }
+    }
+  }
+}
+
+.info-message {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 8px;
+  font-style: italic;
+}
