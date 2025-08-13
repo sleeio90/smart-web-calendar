@@ -21,6 +21,7 @@
       margin: 0;
       font-size: 24px;
       font-weight: 500;
+      text-align: center;
     }
   }
 }
@@ -37,4 +38,24 @@
   text-align: center;
   font-size: 14px;
   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive styles */
+@media (max-width: 576px) {
+  .app-header {
+    padding: 12px 8px;
+    
+    .app-title {
+      padding: 0 10px;
+      
+      h1 {
+        font-size: 20px;
+      }
+    }
+  }
+  
+  .app-footer {
+    padding: 12px 8px;
+    font-size: 12px;
+  }
 }

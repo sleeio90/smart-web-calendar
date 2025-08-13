@@ -325,7 +325,9 @@ export class HomeComponent implements OnInit {
       tipologia = this.selectedType === DayType.CASA ? 'CASA' : 
                   this.selectedType === DayType.AZIENDA ? 'AZIENDA' : 
                   this.selectedType === DayType.PAR ? `PAR (${this.selectedHours} ore)` : 
-                  `FERIE (${this.selectedHours} ore)`;
+                  this.selectedType === DayType.FERIE ? `FERIE (${this.selectedHours} ore)` :
+                  this.selectedType === DayType.MALATTIA ? 'MALATTIA' :
+                  'NONE';
     }
     
     // Formatta le date in modo leggibile

@@ -19,6 +19,14 @@ html, body {
   background-color: #f5f5f5;
 }
 
+/* Responsive breakpoints */
+:root {
+  --mobile-breakpoint: 576px;
+  --tablet-breakpoint: 768px;
+  --desktop-breakpoint: 992px;
+  --large-desktop-breakpoint: 1200px;
+}
+
 /* Common button styles */
 button {
   font-family: 'Roboto', sans-serif;

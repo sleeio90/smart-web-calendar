@@ -3,6 +3,10 @@
   margin: 0 auto;
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+  @media (max-width: 576px) {
+    padding: 10px;
+  }
 }
 
 .calendar-header {
@@ -15,12 +19,20 @@
     margin: 0;
     font-size: 1.8rem;
     color: #333;
+    
+    @media (max-width: 576px) {
+      font-size: 1.4rem;
+    }
   }
 
   .month-navigation {
     display: flex;
     align-items: center;
     gap: 15px;
+    
+    @media (max-width: 576px) {
+      gap: 8px;
+    }
   }
 
   .nav-button {
@@ -40,6 +52,32 @@
 
     &:hover {
       background-color: rgba(66, 133, 244, 0.1);
+    }
+    
+    @media (max-width: 576px) {
+      width: 36px;
+      height: 36px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    
+    .month-navigation {
+      order: 1;
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    
+    .nav-button:first-child {
+      order: 2;
+    }
+    
+    .nav-button:last-child {
+      order: 3;
     }
   }
 }
@@ -62,6 +100,11 @@
       text-align: center;
       font-weight: bold;
       color: #495057;
+      
+      @media (max-width: 576px) {
+        padding: 8px 5px;
+        font-size: 0.8rem;
+      }
     }
   }
 
@@ -78,6 +121,11 @@
       cursor: pointer;
       transition: background-color 0.2s;
       position: relative;
+
+      @media (max-width: 576px) {
+        min-height: 60px;
+        padding: 5px;
+      }
 
       &:hover:not(.spacer) {
         background-color: #f8f9fa;
@@ -147,6 +195,10 @@
         font-size: 1.2rem;
         font-weight: bold;
         color: #333;
+        
+        @media (max-width: 576px) {
+          font-size: 0.9rem;
+        }
       }
 
       .day-content {
@@ -155,10 +207,18 @@
         .day-type {
           font-size: 0.9rem;
           font-weight: bold;
+          
+          @media (max-width: 576px) {
+            font-size: 0.7rem;
+          }
         }
 
         .day-mixed-type {
           font-size: 0.85rem;
+          
+          @media (max-width: 576px) {
+            font-size: 0.65rem;
+          }
 
           .day-type {
             font-weight: bold;
@@ -169,6 +229,10 @@
             font-size: 0.8rem;
             color: #555;
             line-height: 1.2;
+            
+            @media (max-width: 576px) {
+              font-size: 0.6rem;
+            }
           }
           
           .day-secondary-plus {
@@ -176,6 +240,11 @@
             font-size: 0.8rem;
             margin: 0 2px;
             color: #777;
+            
+            @media (max-width: 576px) {
+              font-size: 0.6rem;
+              margin: 0 1px;
+            }
           }
         }
 
@@ -183,6 +252,10 @@
           font-size: 0.8rem;
           color: #666;
           margin-top: 2px;
+          
+          @media (max-width: 576px) {
+            font-size: 0.6rem;
+          }
         }
       }
     }
@@ -194,18 +267,32 @@
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
+  
+  @media (max-width: 576px) {
+    padding: 15px 10px;
+  }
 
   h3 {
     margin-top: 0;
     margin-bottom: 15px;
     color: #333;
     font-size: 1.3rem;
+    
+    @media (max-width: 576px) {
+      font-size: 1.1rem;
+      text-align: center;
+    }
   }
 
   .summary-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
+    
+    @media (max-width: 576px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
 
     .summary-item {
       display: flex;
@@ -214,6 +301,13 @@
       background-color: #fff;
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      
+      @media (max-width: 576px) {
+        padding: 8px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
 
       .summary-label {
         font-weight: bold;
@@ -249,6 +343,11 @@
     max-width: 500px;
     max-height: 90vh;
     overflow: auto;
+    
+    @media (max-width: 576px) {
+      width: 95%;
+      max-height: 95vh;
+    }
 
     .modal-header {
       display: flex;
@@ -256,10 +355,18 @@
       align-items: center;
       padding: 15px 20px;
       border-bottom: 1px solid #e9ecef;
+      
+      @media (max-width: 576px) {
+        padding: 12px 15px;
+      }
 
       h3 {
         margin: 0;
         color: #333;
+        
+        @media (max-width: 576px) {
+          font-size: 1.1rem;
+        }
       }
 
       .close-button {
